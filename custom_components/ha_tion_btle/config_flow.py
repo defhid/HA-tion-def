@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import logging
 import datetime
-import time
 
+import asyncio
 import bleak
 import tion_btle
 import voluptuous as vol
@@ -165,7 +165,7 @@ class TionConfigFlow(TionFlow, config_entries.ConfigFlow, domain=DOMAIN):
             await _tion.pair()
             # We should sleep a bit, because immediately connection will cause device disconnected exception while
             # enabling notifications
-            time.sleep(3)
+            await asyncio.sleep(3)
 
             result = await _tion.get()
         except Exception as e:
